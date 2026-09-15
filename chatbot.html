@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <title>Chatbot - AstroAI</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+```
+<!-- Navigation Bar -->
+
+<nav>
+
+    <h2>🌙 AstroAI</h2>
+
+    <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="zodiac.html">Zodiac</a>
+        <a href="chatbot.html">Chatbot</a>
+        <a href="horoscope.html">Horoscope</a>
+        <a href="about.html">About</a>
+    </div>
+
+</nav>
+
+
+<!-- Chatbot Section -->
+
+<section class="chatbot-section">
+
+    <p class="section-small">
+        YOUR ASTROLOGY ASSISTANT
+    </p>
+
+    <h2>🔮 Chat with AstroAI</h2>
+
+    <p class="chat-subtitle">
+        Ask me something about astrology!
+    </p>
+
+
+    <!-- Suggested Questions -->
+
+    <div class="suggested-questions">
+
+        <button onclick="askQuestion('What are the zodiac signs?')">
+            🌟 Zodiac Signs
+        </button>
+
+        <button onclick="askQuestion('What are the four elements?')">
+            🔥 Four Elements
+        </button>
+
+        <button onclick="askQuestion('Tell me about Aries')">
+            ♈ Aries
+        </button>
+
+        <button onclick="askQuestion('Tell me about Leo')">
+            ♌ Leo
+        </button>
+
+    </div>
+
+
+    <!-- Chat Box -->
+
+    <div class="chat-container">
+
+        <div class="chat-header">
+
+            <div class="bot-icon">
+                🔮
+            </div>
+
+            <div>
+                <h3>AstroAI</h3>
+                <p>● Online</p>
+            </div>
+
+        </div>
+
+
+        <div class="chat-messages" id="chatMessages">
+
+            <div class="bot-message">
+
+                Hello! 🌙 I'm AstroAI.
+
+                <br><br>
+
+                Ask me about zodiac signs, elements,
+                or basic astrology! ✨
+
+            </div>
+
+        </div>
+
+
+        <!-- Input Area -->
+
+        <div class="chat-input">
+
+            <input
+                type="text"
+                id="userInput"
+                placeholder="Ask AstroAI something..."
+                onkeydown="handleEnter(event)"
+            >
+
+            <button onclick="sendMessage()">
+                ➤
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- Footer -->
+
+<footer>
+
+    <h3>🌙 AstroAI</h3>
+
+    <p>
+        Explore the stars. Discover yourself. ✨
+    </p>
+
+    <p class="copyright">
+        © 2026 AstroAI | College Project
+    </p>
+
+</footer>
+
+
+<script src="script.js"></script>
+```
+
+</body>
+
+</html>

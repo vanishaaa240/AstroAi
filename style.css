@@ -1,0 +1,694 @@
+/* =========================
+   GENERAL
+========================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background: #241044;
+    color: white;
+    font-family: Arial, sans-serif;
+}
+
+
+/* =========================
+   NAVIGATION
+========================= */
+
+nav {
+    height: 70px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 50px;
+    background: #17082f;
+    position: sticky;
+    top: 0;
+    z-index: 500;
+}
+
+nav h2 {
+    color: gold;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    margin-left: 25px;
+    transition: 0.3s;
+}
+
+nav a:hover {
+    color: gold;
+}
+
+
+/* =========================
+   HERO
+========================= */
+
+.hero {
+    min-height: 80vh;
+
+    background-image:
+        linear-gradient(
+            rgba(20, 10, 40, 0.65),
+            rgba(20, 10, 40, 0.65)
+        ),
+        url("./sunsign.avif");
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+
+    position: relative;
+}
+
+.hero-content {
+    max-width: 800px;
+    position: relative;
+    z-index: 2;
+}
+
+.small-heading {
+    color: #d8cce8;
+    letter-spacing: 3px;
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+.hero h1 {
+    font-size: 58px;
+    line-height: 1.15;
+    color: gold;
+}
+
+.hero p {
+    font-size: 18px;
+    line-height: 1.6;
+    margin-top: 20px;
+    color: #ddd2ea;
+}
+/* =========================
+   BUTTONS
+========================= */
+
+button {
+    border: none;
+    cursor: pointer;
+    background: gold;
+    color: #241044;
+    padding: 13px 25px;
+    border-radius: 25px;
+    font-size: 16px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: white;
+    transform: translateY(-2px);
+}
+
+
+/* =========================
+   COMMON SECTION
+========================= */
+
+section {
+    scroll-margin-top: 80px;
+}
+
+.section-small {
+    color: gold;
+    letter-spacing: 3px;
+    font-size: 13px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.section-description {
+    color: #d8cce8;
+    margin-bottom: 40px;
+}
+/* =========================
+   ZODIAC
+========================= */
+
+.zodiac-section {
+    text-align: center;
+    padding: 90px 50px;
+}
+
+.zodiac-section h2 {
+    color: gold;
+    font-size: 35px;
+    margin-bottom: 15px;
+}
+
+.zodiac-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 25px;
+    max-width: 1000px;
+    margin: auto;
+}
+
+.zodiac-card {
+    background: #35175f;
+    padding: 30px 20px;
+    border-radius: 18px;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: 0.3s;
+}
+
+.zodiac-card:hover {
+    transform: translateY(-8px);
+    background: #452070;
+    border-color: gold;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.zodiac-symbol {
+    font-size: 50px;
+    color: gold;
+    margin-bottom: 12px;
+}
+
+.zodiac-card h3 {
+    font-size: 21px;
+}
+
+.zodiac-card p {
+    margin-top: 8px;
+    color: #d8cce8;
+    font-size: 14px;
+}
+
+
+/* =========================
+   ZODIAC POPUP
+========================= */
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.modal-content {
+    background: #35175f;
+    padding: 40px;
+    border-radius: 22px;
+    width: 430px;
+    max-width: 95%;
+    text-align: center;
+    position: relative;
+    border: 1px solid #7045a3;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+}
+
+.close {
+    position: absolute;
+    right: 20px;
+    top: 10px;
+    font-size: 32px;
+    cursor: pointer;
+    color: gold;
+}
+
+.close:hover {
+    color: white;
+}
+
+.modal-symbol {
+    font-size: 75px;
+    color: gold;
+    margin-bottom: 10px;
+}
+
+.modal-content h2 {
+    color: gold;
+    font-size: 32px;
+    margin-bottom: 15px;
+}
+
+.modal-content p {
+    margin-top: 12px;
+    line-height: 1.6;
+    color: #eee;
+}
+/* =========================
+   HOROSCOPE
+========================= */
+
+.horoscope-section {
+    text-align: center;
+    padding: 90px 20px;
+    background: #1d0b38;
+}
+
+.horoscope-section h2 {
+    color: gold;
+    font-size: 35px;
+    margin-bottom: 15px;
+}
+
+.horoscope-box {
+    width: 600px;
+    max-width: 95%;
+    margin: auto;
+    background: #35175f;
+    padding: 35px;
+    border-radius: 20px;
+    border: 1px solid #56317d;
+}
+
+.horoscope-box select {
+    width: 100%;
+    padding: 14px;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    background: white;
+    color: #241044;
+}
+
+.horoscope-box button {
+    margin-top: 20px;
+}
+
+.horoscope-result {
+    margin-top: 25px;
+    padding: 20px;
+    border-radius: 15px;
+    background: #241044;
+    color: #eee;
+    line-height: 1.6;
+    min-height: 70px;
+}
+
+
+/* =========================
+   CHATBOT SECTION
+========================= */
+
+.chatbot-section {
+    text-align: center;
+    padding: 100px 20px;
+}
+
+.chatbot-section h2 {
+    color: gold;
+    font-size: 35px;
+    margin-bottom: 12px;
+}
+
+.chat-subtitle {
+    color: #d8cce8;
+}
+
+
+/* =========================
+   SUGGESTED QUESTIONS
+========================= */
+
+.suggested-questions {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 30px auto 20px;
+    max-width: 700px;
+}
+
+.suggested-questions button {
+    background: #35175f;
+    color: white;
+    border: 1px solid #7045a3;
+    font-size: 14px;
+    padding: 10px 17px;
+}
+
+.suggested-questions button:hover {
+    background: gold;
+    color: #241044;
+}
+
+
+/* =========================
+   CHAT CONTAINER
+========================= */
+
+.chat-container {
+    width: 550px;
+    max-width: 95%;
+    height: 560px;
+    margin: 30px auto;
+    background: #17082f;
+    border-radius: 22px;
+    overflow: hidden;
+    border: 1px solid #56317d;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+}
+
+
+/* =========================
+   CHAT HEADER
+========================= */
+
+.chat-header {
+    height: 75px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 15px 20px;
+    background: #35175f;
+    text-align: left;
+}
+
+.bot-icon {
+    width: 45px;
+    height: 45px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    background: #241044;
+    font-size: 23px;
+}
+
+.chat-header h3 {
+    color: gold;
+    margin-bottom: 3px;
+}
+
+.chat-header p {
+    font-size: 12px;
+    color: #8cff9b;
+}
+
+
+/* =========================
+   CHAT MESSAGES
+========================= */
+
+.chat-messages {
+    height: 405px;
+    padding: 20px;
+    overflow-y: auto;
+    text-align: left;
+}
+
+.bot-message,
+.user-message {
+    padding: 12px 15px;
+    border-radius: 15px;
+    margin-bottom: 15px;
+    line-height: 1.5;
+    width: fit-content;
+    max-width: 80%;
+}
+
+.bot-message {
+    background: #35175f;
+    border-bottom-left-radius: 5px;
+}
+
+.user-message {
+    background: #6b4bb5;
+    margin-left: auto;
+    border-bottom-right-radius: 5px;
+}
+/* =========================
+   TYPING INDICATOR
+========================= */
+
+.typing-message {
+    background: #35175f;
+    padding: 12px 17px;
+    border-radius: 15px;
+    width: fit-content;
+    color: #d8cce8;
+    margin-bottom: 15px;
+}
+
+.typing-dots {
+    display: inline-block;
+    animation: typing 1s infinite;
+}
+
+@keyframes typing {
+    0% {
+        opacity: 0.3;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0.3;
+    }
+}
+
+
+/* =========================
+   CHAT INPUT
+========================= */
+
+.chat-input {
+    height: 80px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 15px;
+    background: #211039;
+}
+
+.chat-input input {
+    flex: 1;
+    padding: 14px 18px;
+    border-radius: 25px;
+    border: none;
+    outline: none;
+    font-size: 15px;
+}
+
+.chat-input button {
+    margin: 0;
+    width: 50px;
+    height: 50px;
+    padding: 0;
+    border-radius: 50%;
+    font-size: 20px;
+}
+
+
+/* =========================
+   ABOUT
+========================= */
+
+.about-section {
+    text-align: center;
+    padding: 90px 30px;
+    background: #1d0b38;
+}
+
+.about-section h2 {
+    color: gold;
+    font-size: 35px;
+    margin-bottom: 20px;
+}
+
+.about-section > p {
+    max-width: 700px;
+    margin: 0 auto;
+    line-height: 1.7;
+    color: #d8cce8;
+}
+
+.about-container {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    flex-wrap: wrap;
+    max-width: 1000px;
+    margin: 40px auto;
+}
+
+.about-card {
+    background: #35175f;
+    width: 280px;
+    padding: 30px;
+    border-radius: 18px;
+    border: 1px solid #56317d;
+    transition: 0.3s;
+}
+
+.about-card:hover {
+    transform: translateY(-6px);
+    border-color: gold;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.about-card h3 {
+    color: gold;
+    margin-bottom: 12px;
+}
+
+.about-card p {
+    color: #d8cce8;
+    line-height: 1.6;
+}
+
+.about-note {
+    max-width: 800px;
+    margin: 40px auto 0;
+    padding: 30px;
+    background: #35175f;
+    border-radius: 18px;
+    border: 1px solid #56317d;
+}
+
+.about-note h3 {
+    color: gold;
+    margin-bottom: 10px;
+}
+
+.about-note p {
+    color: #d8cce8;
+    line-height: 1.6;
+}
+/* =========================
+   FOOTER
+========================= */
+
+footer {
+    text-align: center;
+    padding: 40px 20px;
+    background: #17082f;
+}
+
+footer h3 {
+    color: gold;
+    font-size: 23px;
+    margin-bottom: 10px;
+}
+
+footer p {
+    color: #d8cce8;
+}
+
+footer .copyright {
+    margin-top: 20px;
+    font-size: 13px;
+    color: #8d7ca3;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 800px) {
+
+    nav {
+        padding: 0 20px;
+    }
+
+    nav a {
+        margin-left: 10px;
+        font-size: 13px;
+    }
+
+    .hero h1 {
+        font-size: 42px;
+    }
+
+    .zodiac-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+
+@media (max-width: 550px) {
+
+    nav {
+        height: auto;
+        padding: 20px;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .nav-links {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    nav a {
+        margin-left: 5px;
+    }
+
+    .hero {
+        min-height: 500px;
+    }
+
+    .hero h1 {
+        font-size: 35px;
+    }
+
+    .zodiac-section {
+        padding: 70px 20px;
+    }
+
+    .zodiac-container {
+        grid-template-columns: 1fr;
+    }
+
+    .chat-container {
+        height: 520px;
+    }
+
+    .chat-messages {
+        height: 365px;
+    }
+}
+.find-zodiac-section {
+    text-align: center;
+}
+
+.find-zodiac-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <title>Zodiac Signs - AstroAI</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+```
+<!-- Navigation Bar -->
+<nav>
+
+    <h2>🌙 AstroAI</h2>
+
+    <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="zodiac.html">Zodiac</a>
+        <a href="chatbot.html">Chatbot</a>
+        <a href="horoscope.html">Horoscope</a>
+        <a href="about.html">About</a>
+    </div>
+
+</nav>
+
+
+<!-- Zodiac Section -->
+
+<section class="zodiac-section" id="zodiac">
+
+    <p class="section-small">EXPLORE</p>
+
+    <h2>✨ The Twelve Zodiac Signs ✨</h2>
+
+    <p class="section-description">
+        Click on a zodiac sign to discover more about it.
+    </p>
+
+
+    <div class="zodiac-container">
+
+        <div class="zodiac-card" onclick="showZodiac('Aries')">
+            <div class="zodiac-symbol">♈</div>
+            <h3>Aries</h3>
+            <p>Mar 21 - Apr 19</p>
+        </div>
+
+        <div class="zodiac-card" onclick="showZodiac('Taurus')">
+            <div class="zodiac-symbol">♉</div>
+            <h3>Taurus</h3>
+            <p>Apr 20 - May 20</p>
+        </div>
+
+        <div class="zodiac-card" onclick="showZodiac('Gemini')">
+            <div class="zodiac-symbol">♊</div>
+            <h3>Gemini</h3>
+            <p>May 21 - Jun 20</p>
+        </div>
+
+        <div class="zodiac-card" onclick="showZodiac('Cancer')">
+            <div class="zodiac-symbol">♋</div>
+            <h3>Cancer</h3>
+            <p>Jun 21 - Jul 22</p>
+        </div>
+
+        <div class="zodiac-card" onclick="showZodiac('Leo')">
+            <div class="zodiac-symbol">♌</div>
+            <h3>Leo</h3>
+            <p>Jul 23 - Aug 22</p>
+        </div>
+
+        <div class="zodiac-card" onclick="showZodiac('Virgo')">
+            <div class="zodiac-symbol">♍</div>
+            <h3>Virgo</h3>
+            <p>Aug 23 - Sep 22</p>
+        </div>
+
+        <div class="zodiac-card" onclick="showZodiac('Libra')">
+            <div class="zodiac-symbol">♎</div>
+            <h3>Libra</h3>
+            <p>Sep 23 - Oct 22</p>
+        </div>
+
+        <div class="zodiac-card" onclick="showZodiac('Scorpio')">
+            <div class="zodiac-symbol">♏</div>
+            <h3>Scorpio</h3>
+            <p>Oct 23 - Nov 21</p>
+        </div>
+
+        <div class="zodiac-card" onclick="showZodiac('Sagittarius')">
+            <div class="zodiac-symbol">♐</div>
+            <h3>Sagittarius</h3>
+            <p>Nov 22 - Dec 21</p>
+        </div>
+
+        <div class="zodiac-card" onclick="showZodiac('Capricorn')">
+            <div class="zodiac-symbol">♑</div>
+            <h3>Capricorn</h3>
+            <p>Dec 22 - Jan 19</p>
+        </div>
+
+        <div class="zodiac-card" onclick="showZodiac('Aquarius')">
+            <div class="zodiac-symbol">♒</div>
+            <h3>Aquarius</h3>
+            <p>Jan 20 - Feb 18</p>
+        </div>
+
+        <div class="zodiac-card" onclick="showZodiac('Pisces')">
+            <div class="zodiac-symbol">♓</div>
+            <h3>Pisces</h3>
+            <p>Feb 19 - Mar 20</p>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- Find My Zodiac -->
+
+<section class="find-zodiac-section">
+
+    <p class="section-small">DISCOVER</p>
+
+    <h2>🔮 Find Your Zodiac Sign</h2>
+
+    <p class="section-description">
+        Enter your date of birth to discover your zodiac sign.
+    </p>
+
+    <div class="find-zodiac-box">
+
+        <input
+            type="date"
+            id="birthDate"
+        >
+
+        <button onclick="findZodiac()">
+            ✨ Find My Zodiac
+        </button>
+
+        <div id="zodiacResult" class="zodiac-result">
+            Enter your birth date above.
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- Zodiac Popup -->
+
+<div id="zodiacModal" class="modal">
+
+    <div class="modal-content">
+
+        <span class="close" onclick="closeZodiac()">×</span>
+
+        <div id="modalSymbol" class="modal-symbol"></div>
+
+        <h2 id="modalName"></h2>
+
+        <p id="modalDate"></p>
+
+        <p id="modalElement"></p>
+
+        <p id="modalDescription"></p>
+
+    </div>
+
+</div>
+
+
+<!-- Footer -->
+
+<footer>
+
+    <h3>🌙 AstroAI</h3>
+
+    <p>
+        Explore the stars. Discover yourself. ✨
+    </p>
+
+    <p class="copyright">
+        © 2026 AstroAI | College Project
+    </p>
+
+</footer>
+
+
+<script src="script.js"></script>
+```
+
+</body>
+
+</html>
