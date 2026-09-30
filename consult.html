@@ -1,0 +1,1888 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Consult an Astrologer - AstroAI</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     NAVIGATION
+========================= -->
+
+<nav>
+
+    <h2>🌿 AstroAI</h2>
+
+    <div class="nav-links">
+
+        <a href="index.html">Home</a>
+
+        <a href="zodiac.html">Zodiac</a>
+
+        <a href="chatbot.html">Chatbot</a>
+
+        <a href="horoscope.html">Horoscope</a>
+
+        <a href="consult.html">Consult</a>
+
+        <a href="dashboard.html">Dashboard</a>
+
+        <a href="about.html">About</a>
+
+    </div>
+
+</nav>
+
+
+
+<!-- =========================
+     PAGE HEADER
+========================= -->
+
+<section class="page-header">
+
+    <p class="section-small">
+        ASTROLOGY CONSULTATION
+    </p>
+
+    <h1>
+        Verified Astrologer Consultations
+    </h1>
+
+    <p>
+        Find and consult with our expert astrologers to guide your path.
+        Browse and filter to find the perfect match.
+    </p>
+
+</section>
+
+
+
+<!-- =========================
+     FILTER BAR
+========================= -->
+
+<section class="filter-bar">
+
+
+    <!-- SPECIALIZATION -->
+
+    <div class="filter-group">
+
+        <label>
+            Specialization
+        </label>
+
+        <select id="filterSpecialization">
+
+            <option value="">
+                All Specializations
+            </option>
+
+            <option>
+                Vedic Astrology
+            </option>
+
+            <option>
+                Marriage Matching
+            </option>
+
+            <option>
+                Kundli
+            </option>
+
+            <option>
+                Career
+            </option>
+
+            <option>
+                Education
+            </option>
+
+            <option>
+                Horoscope
+            </option>
+
+        </select>
+
+    </div>
+
+
+
+    <!-- LANGUAGE -->
+
+    <div class="filter-group">
+
+        <label>
+            Language
+        </label>
+
+        <select id="filterLanguage">
+
+            <option value="">
+                All Languages
+            </option>
+
+            <option>
+                Hindi
+            </option>
+
+            <option>
+                English
+            </option>
+
+            <option>
+                Punjabi
+            </option>
+
+            <option>
+                Bhojpuri
+            </option>
+
+        </select>
+
+    </div>
+
+
+
+    <!-- RATING -->
+
+    <div class="filter-group">
+
+        <label>
+            Rating
+        </label>
+
+        <div class="filter-static-value">
+
+            ⭐⭐⭐⭐⭐
+
+            <span>
+                1 – 5
+            </span>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- PRICE -->
+
+    <div class="filter-group">
+
+        <label>
+            Price
+        </label>
+
+        <input
+            type="range"
+            id="filterPrice"
+            min="100"
+            max="300"
+            value="300"
+        >
+
+        <span
+            class="filter-static-value"
+            id="priceValue"
+        >
+            Up to ₹300
+        </span>
+
+    </div>
+
+
+
+    <!-- SEARCH -->
+
+    <div class="filter-group filter-search">
+
+        <label>
+            Search
+        </label>
+
+        <input
+            type="text"
+            id="filterSearch"
+            placeholder="🔍 Search for a specific astrologer or topic..."
+        >
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================
+     ASTROLOGER SECTION
+========================= -->
+
+<section class="consult-section">
+
+    <div class="consult-container">
+
+
+
+        <!-- =========================
+             ASTROLOGER 1
+        ========================== -->
+
+        <div
+            class="astro-card"
+            data-price="250"
+        >
+
+            <div class="astro-card-banner">
+
+                <div class="astro-avatar">
+
+                    <img
+                        src="images/riya-sharma.jpg"
+                        alt="Riya Sharma"
+                    >
+
+                </div>
+
+            </div>
+
+
+            <div class="astro-card-body">
+
+                <div class="astro-name-row">
+
+                    <h2>
+                        Riya Sharma
+                    </h2>
+
+                </div>
+
+
+                <p class="specialization">
+                    Vedic Astrology • Marriage Matching • Kundli
+                </p>
+
+
+                <p class="languages">
+                    Fluent languages: Hindi, English
+                </p>
+
+
+                <div class="rating-price-row">
+
+                    <span class="rating">
+                        ⭐ 4.8
+                    </span>
+
+                    <span class="price">
+                        ₹250 / session
+                    </span>
+
+                </div>
+
+
+                <p class="availability available">
+                    🟢 Consultation Available
+                </p>
+
+
+                <div class="card-actions">
+
+                    <button
+                        onclick="openBooking('Riya Sharma')"
+                    >
+                        Book Appointment
+                    </button>
+
+
+                    <button
+                        class="btn-outline"
+                        onclick="viewProfile('Riya Sharma')"
+                    >
+                        View Full Profile
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =========================
+             ASTROLOGER 2
+        ========================== -->
+
+        <div
+            class="astro-card"
+            data-price="300"
+        >
+
+            <div class="astro-card-banner">
+
+                <div class="astro-avatar">
+
+                    <img
+                        src="images/rahull-verma.jpg"
+                        alt="Dr. Rahull Verma"
+                    >
+
+                </div>
+
+            </div>
+
+
+            <div class="astro-card-body">
+
+                <div class="astro-name-row">
+
+                    <h2>
+                        Dr. Rahull Verma
+                    </h2>
+
+                </div>
+
+
+                <p class="specialization">
+                    Vedic Astrology • Astrology Courses
+                </p>
+
+
+                <p class="languages">
+                    Fluent languages: Hindi, English
+                </p>
+
+
+                <div class="rating-price-row">
+
+                    <span class="rating">
+                        ⭐ 4.9
+                    </span>
+
+                    <span class="price">
+                        ₹300 / session
+                    </span>
+
+                </div>
+
+
+                <p class="availability available">
+                    🌍 International Astrologer
+                </p>
+
+
+                <div class="card-actions">
+
+                    <button
+                        onclick="openBooking('Dr. Rahull Verma')"
+                    >
+                        Book Appointment
+                    </button>
+
+
+                    <button
+                        class="btn-outline"
+                        onclick="viewProfile('Dr. Rahull Verma')"
+                    >
+                        View Full Profile
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =========================
+             ASTROLOGER 3
+        ========================== -->
+
+        <div
+            class="astro-card"
+            data-price="200"
+        >
+
+            <div class="astro-card-banner">
+
+                <div class="astro-avatar">
+
+                    <img
+                        src="images/astro-priya.jpg"
+                        alt="Astro Priya"
+                    >
+
+                </div>
+
+            </div>
+
+
+            <div class="astro-card-body">
+
+                <div class="astro-name-row">
+
+                    <h2>
+                        Astro Priya
+                    </h2>
+
+                </div>
+
+
+                <p class="specialization">
+                    Astrology • Tarot Card Reading • Spiritual Guidance
+                </p>
+
+
+                <p class="languages">
+                    Fluent languages: Hindi, English
+                </p>
+
+
+                <div class="rating-price-row">
+
+                    <span class="rating">
+                        ⭐ 4.7
+                    </span>
+
+                    <span class="price">
+                        ₹200 / session
+                    </span>
+
+                </div>
+
+
+                <p class="availability available">
+                    🎙️ Featured on YouTube & Podcasts
+                </p>
+
+
+                <div class="card-actions">
+
+                    <button
+                        onclick="openBooking('Astro Priya')"
+                    >
+                        Book Appointment
+                    </button>
+
+
+                    <button
+                        class="btn-outline"
+                        onclick="viewProfile('Astro Priya')"
+                    >
+                        View Full Profile
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =========================
+             ASTROLOGER 4
+        ========================== -->
+
+        <div
+            class="astro-card"
+            data-price="275"
+        >
+
+            <div class="astro-card-banner">
+
+                <div class="astro-avatar">
+
+                    <img
+                        src="images/sudhir-tiwari.jpg"
+                        alt="Acharya Sudhir Tiwari"
+                    >
+
+                </div>
+
+            </div>
+
+
+            <div class="astro-card-body">
+
+                <div class="astro-name-row">
+
+                    <h2>
+                        Acharya Sudhir Tiwari
+                    </h2>
+
+                </div>
+
+
+                <p class="specialization">
+                    Vedic Astrology • Tarot Reading
+                </p>
+
+
+                <p class="languages">
+                    Fluent languages: Hindi, English, Bhojpuri
+                </p>
+
+
+                <div class="rating-price-row">
+
+                    <span class="rating">
+                        ⭐ 4.9
+                    </span>
+
+                    <span class="price">
+                        ₹275 / session
+                    </span>
+
+                </div>
+
+
+                <p class="availability available">
+                    🟢 Available: 4 PM – 10 PM
+                </p>
+
+
+                <div class="card-actions">
+
+                    <button
+                        onclick="openBooking('Acharya Sudhir Tiwari')"
+                    >
+                        Book Appointment
+                    </button>
+
+
+                    <button
+                        class="btn-outline"
+                        onclick="viewProfile('Acharya Sudhir Tiwari')"
+                    >
+                        View Full Profile
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================
+     ASTROLOGER PROFILE POPUP
+========================= -->
+
+<div
+    id="profileModal"
+    class="profile-modal"
+>
+
+    <div class="profile-card">
+
+        <button
+            class="profile-close"
+            onclick="closeProfile()"
+        >
+            ×
+        </button>
+
+
+        <div class="profile-top">
+
+            <div class="profile-big-avatar">
+
+                <img
+                    id="profileImage"
+                    src=""
+                    alt="Astrologer"
+                >
+
+            </div>
+
+
+            <div class="profile-heading">
+
+                <div class="profile-verified">
+                    ✔ Verified Astrologer
+                </div>
+
+                <h2 id="profileTitle">
+                    Astrologer Name
+                </h2>
+
+                <p id="profileSpecialization">
+                    Astrology Specialist
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="profile-divider"></div>
+
+
+        <div class="profile-section">
+
+            <h3>
+                About the Astrologer
+            </h3>
+
+            <p id="profileDetails">
+                Profile information will appear here.
+            </p>
+
+        </div>
+
+
+        <div class="profile-highlights">
+
+
+            <div class="profile-highlight">
+
+                <span>🔮</span>
+
+                <strong>
+                    Expertise
+                </strong>
+
+                <small>
+                    Professional Astrology
+                </small>
+
+            </div>
+
+
+
+            <div class="profile-highlight">
+
+                <span>⭐</span>
+
+                <strong>
+                    Verified
+                </strong>
+
+                <small>
+                    Profile Verified
+                </small>
+
+            </div>
+
+
+
+            <div class="profile-highlight">
+
+                <span>🌿</span>
+
+                <strong>
+                    Guidance
+                </strong>
+
+                <small>
+                    Personal Consultation
+                </small>
+
+            </div>
+
+
+        </div>
+
+
+        <div class="profile-actions">
+
+            <button
+                class="profile-book-btn"
+                onclick="bookFromProfile()"
+            >
+                📅 Book Consultation
+            </button>
+
+
+            <button
+                class="profile-back-btn"
+                onclick="closeProfile()"
+            >
+                Close
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- =========================
+     BOOKING POPUP
+========================= -->
+
+<div
+    id="bookingModal"
+    class="booking-modal"
+>
+
+    <div class="booking-box">
+
+        <button
+            class="close-booking"
+            onclick="closeBooking()"
+        >
+            ×
+        </button>
+
+
+        <h2>
+            📅 Book Consultation
+        </h2>
+
+
+        <p id="selectedAstrologer"></p>
+
+
+        <label>
+            Your Name
+        </label>
+
+        <input
+            type="text"
+            id="bookingName"
+            placeholder="Enter your name"
+        >
+
+
+        <label>
+            Date of Birth
+        </label>
+
+        <input
+            type="date"
+            id="bookingDOB"
+        >
+
+
+        <label>
+            Consultation Topic
+        </label>
+
+        <select id="bookingTopic">
+
+            <option value="">
+                Select a topic
+            </option>
+
+            <option>
+                Love & Relationships
+            </option>
+
+            <option>
+                Career
+            </option>
+
+            <option>
+                Education
+            </option>
+
+            <option>
+                Horoscope
+            </option>
+
+            <option>
+                General Astrology
+            </option>
+
+        </select>
+
+
+        <label>
+            Choose Date
+        </label>
+
+        <input
+            type="date"
+            id="bookingDate"
+        >
+
+
+        <label>
+            Choose Time
+        </label>
+
+        <select id="bookingTime">
+
+            <option value="">
+                Select time
+            </option>
+
+        </select>
+
+
+        <button onclick="confirmBooking()">
+            Confirm Booking
+        </button>
+
+
+        <p id="bookingMessage"></p>
+
+    </div>
+
+</div>
+
+
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<footer>
+
+    <h3>
+        🌿 AstroAI
+    </h3>
+
+    <p>
+        Explore astrology with AstroAI.
+    </p>
+
+    <p class="copyright">
+        © 2026 AstroAI | College Project
+    </p>
+
+</footer>
+
+
+
+<script>
+
+
+/* =========================
+   GLOBAL VARIABLES
+========================= */
+
+let selectedAstrologer = "";
+
+let selectedProfile = "";
+
+
+
+/* =========================
+   ASTROLOGER SCHEDULES
+========================= */
+
+const astrologerSchedules = {
+
+
+    "Riya Sharma": [
+
+        "10:00 AM",
+        "12:00 PM",
+        "3:00 PM",
+        "6:00 PM"
+
+    ],
+
+
+
+    "Dr. Rahull Verma": [
+
+        "10:00 AM",
+        "12:00 PM",
+        "3:00 PM",
+        "6:00 PM",
+        "8:00 PM"
+
+    ],
+
+
+
+    "Astro Priya": [
+
+        "10:00 AM",
+        "12:00 PM",
+        "3:00 PM",
+        "6:00 PM",
+        "8:00 PM"
+
+    ],
+
+
+
+    "Acharya Sudhir Tiwari": [
+
+        "4:00 PM",
+        "6:00 PM",
+        "8:00 PM",
+        "10:00 PM"
+
+    ]
+
+};
+
+
+
+/* =========================
+   FILTER ELEMENTS
+========================= */
+
+const searchInput =
+    document.getElementById(
+        "filterSearch"
+    );
+
+
+const specializationFilter =
+    document.getElementById(
+        "filterSpecialization"
+    );
+
+
+const languageFilter =
+    document.getElementById(
+        "filterLanguage"
+    );
+
+
+const priceFilter =
+    document.getElementById(
+        "filterPrice"
+    );
+
+
+const priceValue =
+    document.getElementById(
+        "priceValue"
+    );
+
+
+
+/* =========================
+   FILTER ASTROLOGERS
+========================= */
+
+function filterAstrologers() {
+
+
+    const searchText =
+        searchInput.value
+            .toLowerCase()
+            .trim();
+
+
+    const specialization =
+        specializationFilter.value
+            .toLowerCase();
+
+
+    const language =
+        languageFilter.value
+            .toLowerCase();
+
+
+    const maximumPrice =
+        Number(
+            priceFilter.value
+        );
+
+
+    /* Update price text */
+
+    priceValue.textContent =
+        "Up to ₹" +
+        maximumPrice;
+
+
+    const cards =
+        document.querySelectorAll(
+            ".astro-card"
+        );
+
+
+    cards.forEach(
+        function(card) {
+
+
+            const cardText =
+                card.textContent
+                    .toLowerCase();
+
+
+            const cardSpecialization =
+                card.querySelector(
+                    ".specialization"
+                )
+                .textContent
+                .toLowerCase();
+
+
+            const cardLanguages =
+                card.querySelector(
+                    ".languages"
+                )
+                .textContent
+                .toLowerCase();
+
+
+            const cardPrice =
+                Number(
+                    card.dataset.price
+                );
+
+
+            const matchesSearch =
+                searchText === "" ||
+                cardText.includes(
+                    searchText
+                );
+
+
+            const matchesSpecialization =
+                specialization === "" ||
+                cardSpecialization.includes(
+                    specialization
+                );
+
+
+            const matchesLanguage =
+                language === "" ||
+                cardLanguages.includes(
+                    language
+                );
+
+
+            const matchesPrice =
+                cardPrice <=
+                maximumPrice;
+
+
+            if (
+                matchesSearch &&
+                matchesSpecialization &&
+                matchesLanguage &&
+                matchesPrice
+            ) {
+
+                card.style.display = "";
+
+            } else {
+
+                card.style.display =
+                    "none";
+
+            }
+
+        }
+    );
+
+}
+
+
+
+/* =========================
+   FILTER EVENTS
+========================= */
+
+searchInput.addEventListener(
+    "input",
+    filterAstrologers
+);
+
+
+specializationFilter.addEventListener(
+    "change",
+    filterAstrologers
+);
+
+
+languageFilter.addEventListener(
+    "change",
+    filterAstrologers
+);
+
+
+priceFilter.addEventListener(
+    "input",
+    filterAstrologers
+);
+
+
+
+/* =========================
+   SET DATE LIMITS
+========================= */
+
+function setDateLimits() {
+
+
+    const today =
+        new Date();
+
+
+    const todayString =
+        today
+            .toISOString()
+            .split("T")[0];
+
+
+    /*
+        Booking date cannot
+        be in the past.
+    */
+
+    document.getElementById(
+        "bookingDate"
+    ).min =
+        todayString;
+
+
+    /*
+        Date of birth cannot
+        be in the future.
+    */
+
+    document.getElementById(
+        "bookingDOB"
+    ).max =
+        todayString;
+
+}
+
+
+
+/* =========================
+   UPDATE TIME SLOTS
+========================= */
+
+function updateTimeSlots() {
+
+
+    const timeSelect =
+        document.getElementById(
+            "bookingTime"
+        );
+
+
+    /*
+        Clear old options.
+    */
+
+    timeSelect.innerHTML =
+        '<option value="">Select time</option>';
+
+
+    /*
+        Get selected astrologer's
+        available times.
+    */
+
+    const times =
+        astrologerSchedules[
+            selectedAstrologer
+        ] || [];
+
+
+    /*
+        Add available times.
+    */
+
+    times.forEach(
+        function(time) {
+
+
+            const option =
+                document.createElement(
+                    "option"
+                );
+
+
+            option.value =
+                time;
+
+
+            option.textContent =
+                time;
+
+
+            timeSelect.appendChild(
+                option
+            );
+
+        }
+    );
+
+}
+
+
+
+/* =========================
+   OPEN BOOKING
+========================= */
+
+function openBooking(name) {
+
+
+    selectedAstrologer =
+        name;
+
+
+    document.getElementById(
+        "selectedAstrologer"
+    ).textContent =
+        "Consulting with " +
+        name;
+
+
+    /*
+        Clear old message.
+    */
+
+    document.getElementById(
+        "bookingMessage"
+    ).textContent =
+        "";
+
+
+    /*
+        Clear old date.
+    */
+
+    document.getElementById(
+        "bookingDate"
+    ).value =
+        "";
+
+
+    /*
+        Clear old topic.
+    */
+
+    document.getElementById(
+        "bookingTopic"
+    ).value =
+        "";
+
+
+    /*
+        Load available slots.
+    */
+
+    updateTimeSlots();
+
+
+    /*
+        Apply date restrictions.
+    */
+
+    setDateLimits();
+
+
+    /*
+        Open booking popup.
+    */
+
+    document.getElementById(
+        "bookingModal"
+    ).style.display =
+        "flex";
+
+}
+
+
+
+/* =========================
+   CLOSE BOOKING
+========================= */
+
+function closeBooking() {
+
+
+    document.getElementById(
+        "bookingModal"
+    ).style.display =
+        "none";
+
+}
+
+
+
+/* =========================
+   VIEW PROFILE
+========================= */
+
+function viewProfile(name) {
+
+
+    const profiles = {
+
+
+        "Riya Sharma": {
+
+            image:
+                "images/riya-sharma.jpg",
+
+            specialization:
+                "Vedic Astrology • Marriage Matching • Kundli",
+
+            details:
+                "Professional astrology consultation focused on Vedic Astrology, marriage matching and Kundli guidance. Listed languages include Hindi and English."
+
+        },
+
+
+
+        "Dr. Rahull Verma": {
+
+            image:
+                "images/rahull-verma.jpg",
+
+            specialization:
+                "Vedic Astrology • Astrology Courses",
+
+            details:
+                "PhD in Vedic Astrology and professional astrologer. His profile states that he has trained more than 12,000 students and also offers astrology learning through online courses."
+
+        },
+
+
+
+        "Astro Priya": {
+
+            image:
+                "images/astro-priya.jpg",
+
+            specialization:
+                "Astrologer • Tarot Card Reader • Spiritual Guide",
+
+            details:
+                "Astro Priya is presented as an astrologer, tarot card reader and spiritual guide with 8+ years of experience and 5,000+ consultations."
+
+        },
+
+
+
+        "Acharya Sudhir Tiwari": {
+
+            image:
+                "images/sudhir-tiwari.jpg",
+
+            specialization:
+                "Vedic Astrology • Tarot Reading",
+
+            details:
+                "The supplied profile states 52,000+ consultations and 15+ years of astrology experience. Languages include Hindi, English and Bhojpuri. Listed availability is 4 PM to 10 PM."
+
+        }
+
+    };
+
+
+
+    const profile =
+        profiles[name];
+
+
+    if (!profile) {
+
+        alert(
+            "Profile information not available."
+        );
+
+        return;
+
+    }
+
+
+
+    selectedProfile =
+        name;
+
+
+
+    document.getElementById(
+        "profileTitle"
+    ).textContent =
+        name;
+
+
+
+    document.getElementById(
+        "profileImage"
+    ).src =
+        profile.image;
+
+
+
+    document.getElementById(
+        "profileImage"
+    ).alt =
+        name;
+
+
+
+    document.getElementById(
+        "profileSpecialization"
+    ).textContent =
+        profile.specialization;
+
+
+
+    document.getElementById(
+        "profileDetails"
+    ).textContent =
+        profile.details;
+
+
+
+    document.getElementById(
+        "profileModal"
+    ).style.display =
+        "flex";
+
+}
+
+
+
+/* =========================
+   CLOSE PROFILE
+========================= */
+
+function closeProfile() {
+
+
+    document.getElementById(
+        "profileModal"
+    ).style.display =
+        "none";
+
+}
+
+
+
+/* =========================
+   BOOK FROM PROFILE
+========================= */
+
+function bookFromProfile() {
+
+
+    closeProfile();
+
+
+    openBooking(
+        selectedProfile
+    );
+
+}
+
+
+
+/* =========================
+   CHECK SLOT AVAILABILITY
+========================= */
+
+function isSlotAlreadyBooked(
+    astrologer,
+    date,
+    time
+) {
+
+
+    const consultations =
+        JSON.parse(
+            localStorage.getItem(
+                "consultations"
+            )
+        ) || [];
+
+
+    return consultations.some(
+        function(consultation) {
+
+            return (
+                consultation.astrologer ===
+                astrologer &&
+
+                consultation.date ===
+                date &&
+
+                consultation.time ===
+                time
+            );
+
+        }
+    );
+
+}
+
+
+
+/* =========================
+   CONFIRM BOOKING
+========================= */
+
+function confirmBooking() {
+
+
+    const name =
+        document.getElementById(
+            "bookingName"
+        ).value.trim();
+
+
+    const dob =
+        document.getElementById(
+            "bookingDOB"
+        ).value;
+
+
+    const topic =
+        document.getElementById(
+            "bookingTopic"
+        ).value;
+
+
+    const date =
+        document.getElementById(
+            "bookingDate"
+        ).value;
+
+
+    const time =
+        document.getElementById(
+            "bookingTime"
+        ).value;
+
+
+    const message =
+        document.getElementById(
+            "bookingMessage"
+        );
+
+
+
+    /* =========================
+       BASIC VALIDATION
+    ========================= */
+
+    if (
+        name === "" ||
+        dob === "" ||
+        topic === "" ||
+        date === "" ||
+        time === ""
+    ) {
+
+        message.textContent =
+            "Please fill all the details.";
+
+        return;
+
+    }
+
+
+
+    /* =========================
+       TODAY
+    ========================= */
+
+    const today =
+        new Date();
+
+
+    today.setHours(
+        0,
+        0,
+        0,
+        0
+    );
+
+
+
+    /* =========================
+       BOOKING DATE
+    ========================= */
+
+    const selectedDate =
+        new Date(
+            date +
+            "T00:00:00"
+        );
+
+
+    if (
+        selectedDate <
+        today
+    ) {
+
+        message.textContent =
+            "Please select today or a future date.";
+
+        return;
+
+    }
+
+
+
+    /* =========================
+       DOB VALIDATION
+    ========================= */
+
+    const birthDate =
+        new Date(
+            dob +
+            "T00:00:00"
+        );
+
+
+    if (
+        birthDate >
+        today
+    ) {
+
+        message.textContent =
+            "Date of birth cannot be in the future.";
+
+        return;
+
+    }
+
+
+
+    /* =========================
+       TIME VALIDATION
+    ========================= */
+
+    const availableTimes =
+        astrologerSchedules[
+            selectedAstrologer
+        ] || [];
+
+
+    if (
+        !availableTimes.includes(
+            time
+        )
+    ) {
+
+        message.textContent =
+            "Please select an available time.";
+
+        return;
+
+    }
+
+
+
+    /* =========================
+       CHECK DUPLICATE SLOT
+    ========================= */
+
+    if (
+        isSlotAlreadyBooked(
+            selectedAstrologer,
+            date,
+            time
+        )
+    ) {
+
+        message.textContent =
+            "This time slot is already booked. Please choose another time.";
+
+        return;
+
+    }
+
+
+
+    /* =========================
+       CREATE CONSULTATION
+    ========================= */
+
+    const consultation = {
+
+
+        id:
+            "ASTRO-" +
+            Date.now(),
+
+
+        astrologer:
+            selectedAstrologer,
+
+
+        name:
+            name,
+
+
+        dob:
+            dob,
+
+
+        topic:
+            topic,
+
+
+        date:
+            date,
+
+
+        time:
+            time,
+
+
+        bookedAt:
+            new Date().toISOString()
+
+    };
+
+
+
+    /* =========================
+       GET EXISTING BOOKINGS
+    ========================= */
+
+    let consultations =
+        JSON.parse(
+            localStorage.getItem(
+                "consultations"
+            )
+        ) || [];
+
+
+
+    /* =========================
+       ADD BOOKING
+    ========================= */
+
+    consultations.push(
+        consultation
+    );
+
+
+
+    /* =========================
+       SAVE BOOKING
+    ========================= */
+
+    localStorage.setItem(
+        "consultations",
+        JSON.stringify(
+            consultations
+        )
+    );
+
+
+
+    /* =========================
+       SUCCESS MESSAGE
+    ========================= */
+
+    message.textContent =
+        "✅ Consultation booked with " +
+        selectedAstrologer +
+        " on " +
+        date +
+        " at " +
+        time +
+        ".";
+
+
+
+    /* =========================
+       CLEAR FORM
+    ========================= */
+
+    document.getElementById(
+        "bookingName"
+    ).value =
+        "";
+
+
+    document.getElementById(
+        "bookingDOB"
+    ).value =
+        "";
+
+
+    document.getElementById(
+        "bookingTopic"
+    ).value =
+        "";
+
+
+    document.getElementById(
+        "bookingDate"
+    ).value =
+        "";
+
+
+    document.getElementById(
+        "bookingTime"
+    ).value =
+        "";
+
+}
+
+
+
+/* =========================
+   CLOSE MODALS ON BACKGROUND
+========================= */
+
+document.getElementById(
+    "profileModal"
+).addEventListener(
+    "click",
+    function(event) {
+
+        if (
+            event.target ===
+            this
+        ) {
+
+            closeProfile();
+
+        }
+
+    }
+);
+
+
+document.getElementById(
+    "bookingModal"
+).addEventListener(
+    "click",
+    function(event) {
+
+        if (
+            event.target ===
+            this
+        ) {
+
+            closeBooking();
+
+        }
+
+    }
+);
+
+
+
+</script>
+
+
+</body>
+
+</html>

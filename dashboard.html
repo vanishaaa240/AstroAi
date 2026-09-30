@@ -1,0 +1,2858 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>My Astro Dashboard | AstroAI</title>
+
+    <link rel="stylesheet"
+          href="style.css">
+
+
+    <!-- =========================
+         PROFILE SETTINGS MODAL CSS
+    ========================== -->
+
+    <style>
+
+        .settings-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.55);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .settings-modal.active {
+            display: flex;
+        }
+
+        .settings-box {
+            width: 100%;
+            max-width: 480px;
+            background: #ffffff;
+            border-radius: 18px;
+            padding: 30px;
+            position: relative;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+            animation: settingsPopup 0.25s ease;
+        }
+
+        @keyframes settingsPopup {
+
+            from {
+                opacity: 0;
+                transform: scale(0.95) translateY(15px);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+
+        }
+
+        .settings-close {
+            position: absolute;
+            top: 12px;
+            right: 18px;
+            border: none;
+            background: transparent;
+            font-size: 28px;
+            color: #777;
+            cursor: pointer;
+        }
+
+        .settings-close:hover {
+            color: #198754;
+        }
+
+        .settings-box h2 {
+            color: #176b3a;
+            margin: 0 0 8px;
+        }
+
+        .settings-description {
+            color: #777;
+            font-size: 14px;
+            margin-bottom: 25px;
+        }
+
+        .settings-field {
+            margin-bottom: 18px;
+        }
+
+        .settings-field label {
+            display: block;
+            margin-bottom: 7px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #444;
+        }
+
+        .settings-field input,
+        .settings-field select {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 12px 14px;
+            border: 1px solid #d6e4db;
+            border-radius: 9px;
+            background: #fafdfb;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .settings-field input:focus,
+        .settings-field select:focus {
+            border-color: #198754;
+        }
+
+        .save-settings-btn {
+            width: 100%;
+            border: none;
+            padding: 13px;
+            border-radius: 9px;
+            background: #198754;
+            color: white;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 5px;
+        }
+
+        .save-settings-btn:hover {
+            background: #176b3a;
+        }
+
+        .settings-success {
+            display: none;
+            text-align: center;
+            color: #198754;
+            font-size: 13px;
+            font-weight: 600;
+            margin-top: 12px;
+        }
+
+        .quick-links li {
+            cursor: pointer;
+        }
+
+
+        /* =========================
+           MY HISTORY CSS
+        ========================== */
+
+        .my-history-box {
+            width: 100%;
+        }
+
+        .history-top-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            gap: 10px;
+        }
+
+        .history-top-row p {
+            margin: 0;
+        }
+
+        .clear-history-btn {
+            border: 1px solid #198754;
+            background: white;
+            color: #198754;
+            border-radius: 7px;
+            padding: 7px 11px;
+            font-size: 11px;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .clear-history-btn:hover {
+            background: #198754;
+            color: white;
+        }
+
+        .history-entry {
+            display: flex;
+            gap: 12px;
+            padding: 13px 0;
+            border-bottom: 1px solid #eeeeee;
+        }
+
+        .history-entry:last-child {
+            border-bottom: none;
+        }
+
+        .history-icon {
+            width: 36px;
+            height: 36px;
+            min-width: 36px;
+            border-radius: 50%;
+            background: #eaf7ef;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 17px;
+        }
+
+        .history-content {
+            flex: 1;
+        }
+
+        .history-content strong {
+            display: block;
+            color: #333;
+            font-size: 13px;
+            margin-bottom: 3px;
+        }
+
+        .history-content p {
+            margin: 0 0 4px;
+            color: #777;
+            font-size: 11px;
+            line-height: 1.5;
+        }
+
+        .history-date {
+            color: #999;
+            font-size: 10px;
+        }
+
+        .history-empty {
+            text-align: center;
+            padding: 20px 5px;
+            color: #888;
+            font-size: 12px;
+        }
+
+        .history-empty-icon {
+            font-size: 28px;
+            margin-bottom: 7px;
+        }
+
+        @media (max-width: 600px) {
+
+            .settings-box {
+                padding: 24px 20px;
+            }
+
+            .history-top-row {
+                align-items: flex-start;
+            }
+
+            .history-entry {
+                gap: 9px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     NAVIGATION
+========================= -->
+
+<nav>
+
+    <h2>🌿 AstroAI</h2>
+
+    <div class="nav-links">
+
+        <a href="index.html">Home</a>
+
+        <a href="zodiac.html">Zodiac</a>
+
+        <a href="chatbot.html">Chatbot</a>
+
+        <a href="horoscope.html">Horoscope</a>
+
+        <a href="consult.html">Consult</a>
+
+        <a href="dashboard.html">Dashboard</a>
+
+        <a href="about.html">About</a>
+
+    </div>
+
+</nav>
+
+
+
+<!-- =========================
+     DASHBOARD HERO
+========================= -->
+
+<section class="dashboard-hero">
+
+    <p class="breadcrumb">
+        My Dashboard
+    </p>
+
+    <h1>
+
+        Welcome,
+
+        <span id="profileNameHero">
+            Astro User
+        </span>
+
+        | Your Personalized Astrology Hub
+
+    </h1>
+
+    <p class="hero-subtext">
+
+        Your personal space for astrology, consultations and saved content.
+
+    </p>
+
+    <h2 class="snapshot-heading">
+
+        Today's Cosmic Snapshot
+
+    </h2>
+
+</section>
+
+
+
+<!-- =========================
+     DASHBOARD LAYOUT
+========================= -->
+
+<section class="dashboard-section">
+
+    <div class="dashboard-layout">
+
+
+        <!-- =========================
+             MAIN COLUMN
+        ========================== -->
+
+        <div class="dashboard-main">
+
+
+            <!-- =========================
+                 SAVED HOROSCOPE
+            ========================== -->
+
+            <div class="panel">
+
+                <div class="panel-banner">
+
+                    <h3>
+                        Saved Horoscope
+                    </h3>
+
+                </div>
+
+                <div class="panel-body">
+
+                    <div class="panel-title-row">
+
+                        <h4 id="horoscopeTitle">
+
+                            Today's Gemini Horoscope
+
+                        </h4>
+
+                        <span class="verified-badge">
+
+                            ✔ Verified
+
+                        </span>
+
+                    </div>
+
+
+                    <div class="horoscope-grid">
+
+                        <div class="horoscope-col">
+
+                            <p>
+                                Love
+                            </p>
+
+                            <p>
+                                Career
+                            </p>
+
+                            <p>
+                                Health
+                            </p>
+
+                        </div>
+
+
+                        <div class="horoscope-col">
+
+                            <p>
+                                Focus on communication
+                            </p>
+
+                            <p>
+                                A new opportunity appears
+                            </p>
+
+                            <p>
+                                Stay hydrated, rest well
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="lucky-row">
+
+                        <div>
+
+                            <p class="lucky-label">
+                                Lucky Color
+                            </p>
+
+                            <p class="lucky-value">
+                                Lavender
+                            </p>
+
+                        </div>
+
+
+                        <div>
+
+                            <p class="lucky-label">
+                                Lucky Number
+                            </p>
+
+                            <p class="lucky-value">
+                                7
+                            </p>
+
+                        </div>
+
+
+                        <button
+                            class="btn-share"
+                            onclick="saveHoroscope()">
+
+                            Share
+
+                        </button>
+
+                    </div>
+
+
+                    <p
+                        id="savedHoroscope"
+                        class="panel-status">
+
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =========================
+                 AI HISTORY + MY HISTORY
+            ========================== -->
+
+            <div class="two-col-row">
+
+
+                <!-- AI HISTORY -->
+
+                <div class="panel">
+
+                    <div class="panel-banner">
+
+                        <h3>
+                            AI History
+                        </h3>
+
+                    </div>
+
+
+                    <div class="panel-body">
+
+                        <div class="panel-title-row">
+
+                            <h4>
+                                AI Chat History
+                            </h4>
+
+                            <span class="verified-badge">
+
+                                ✔ Verified
+
+                            </span>
+
+                        </div>
+
+
+                        <ul
+                            class="history-list"
+                            id="chatHistory">
+
+                            <li>
+
+                                <span>
+                                    Jupiter Transit Query
+                                </span>
+
+                                <span>
+                                    Sep 20
+                                </span>
+
+                            </li>
+
+
+                            <li>
+
+                                <span>
+                                    Compatibility Check
+                                </span>
+
+                                <span>
+                                    Sep 18
+                                </span>
+
+                            </li>
+
+
+                            <li>
+
+                                <span>
+                                    Compatibility Check
+                                </span>
+
+                                <span>
+                                    Sep 16
+                                </span>
+
+                            </li>
+
+
+                            <li>
+
+                                <span>
+                                    Compatibility Check
+                                </span>
+
+                                <span>
+                                    Sep 16
+                                </span>
+
+                            </li>
+
+                        </ul>
+
+
+                        <div class="history-actions">
+
+                            <button
+                                class="btn-link"
+                                onclick="viewChatHistory()">
+
+                                🔄 Regenerate
+
+                            </button>
+
+
+                            <button
+                                class="btn-link"
+                                onclick="simplifyHistory()">
+
+                                🔀 Simplify
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- MY HISTORY -->
+
+                <div class="panel">
+
+                    <div class="panel-banner">
+
+                        <h3>
+                            My History
+                        </h3>
+
+                    </div>
+
+
+                    <div class="panel-body">
+
+                        <div class="history-top-row">
+
+                            <p class="panel-subtext">
+
+                                Recent AstroAI activity
+
+                            </p>
+
+
+                            <button
+                                class="clear-history-btn"
+                                onclick="clearMyHistory()">
+
+                                Clear
+
+                            </button>
+
+                        </div>
+
+
+                        <div
+                            class="my-history-box"
+                            id="myHistory">
+
+                            <!-- JavaScript loads history here -->
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =========================
+                 SAVED VIDEOS
+            ========================== -->
+
+            <div class="panel">
+
+                <div class="panel-banner panel-banner-with-actions">
+
+                    <h3>
+                        Saved Videos
+                    </h3>
+
+                </div>
+
+
+                <div class="panel-body">
+
+
+                    <div class="panel-title-row">
+
+                        <p class="panel-subtext">
+
+                            My favorite Tux Astro YouTube videos
+
+                        </p>
+
+
+                        <div class="video-filters">
+
+                            <select>
+
+                                <option>
+                                    Filters
+                                </option>
+
+                            </select>
+
+
+                            <select>
+
+                                <option>
+                                    Filter
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div
+                        class="video-grid"
+                        id="savedVideos">
+
+
+                        <div class="video-item">
+
+                            <div class="video-thumb thumb-1">
+
+                                <span class="video-duration">
+                                    2:36
+                                </span>
+
+                            </div>
+
+
+                            <div class="video-info">
+
+                                <p class="video-title">
+                                    Full Moon Rituals
+                                </p>
+
+                                <p class="video-source">
+                                    Tux Astro · 11 mins
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="video-item">
+
+                            <div class="video-thumb thumb-2">
+
+                                <span class="video-duration">
+                                    5:50
+                                </span>
+
+                            </div>
+
+
+                            <div class="video-info">
+
+                                <p class="video-title">
+                                    Saturn Retrograde Effects
+                                </p>
+
+                                <p class="video-source">
+                                    Tux Astro · Videos
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="video-item">
+
+                            <div class="video-thumb thumb-3">
+
+                                <span class="video-duration">
+                                    3:27
+                                </span>
+
+                            </div>
+
+
+                            <div class="video-info">
+
+                                <p class="video-title">
+                                    Saturn Retrograde Effects
+                                </p>
+
+                                <p class="video-source">
+                                    Tux Astro · Videos
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="video-item">
+
+                            <div class="video-thumb thumb-4">
+
+                                <span class="video-duration">
+                                    3:30
+                                </span>
+
+                            </div>
+
+
+                            <div class="video-info">
+
+                                <p class="video-title">
+                                    Saturn Timeless Effects
+                                </p>
+
+                                <p class="video-source">
+                                    Tux Astro · Videos
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="video-item">
+
+                            <div class="video-thumb thumb-5">
+
+                                <span class="video-duration">
+                                </span>
+
+                            </div>
+
+
+                            <div class="video-info">
+
+                                <p class="video-title">
+                                    Saturn Retrograde Effects
+                                </p>
+
+                                <p class="video-source">
+                                    Tux Astro · Videos
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="video-item">
+
+                            <div class="video-thumb thumb-6">
+
+                                <span class="video-duration">
+                                </span>
+
+                            </div>
+
+
+                            <div class="video-info">
+
+                                <p class="video-title">
+                                    Saturn Retrograde Effects
+                                </p>
+
+                                <p class="video-source">
+                                    Tux Astro · Videos
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+
+                    <button
+                        onclick="saveVideo()">
+
+                        Save Video
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =========================
+             SIDEBAR
+        ========================== -->
+
+        <div class="dashboard-sidebar">
+
+
+            <!-- =========================
+                 SAVED ASTROLOGERS
+            ========================== -->
+
+            <div class="panel">
+
+                <div class="panel-banner">
+
+                    <h3>
+                        Saved Astrologers
+                    </h3>
+
+                </div>
+
+
+                <div class="panel-body">
+
+
+                    <div
+                        class="sidebar-list"
+                        id="savedAstrologers">
+
+
+                        <div class="astrologer-list-item">
+
+                            <div class="mini-avatar avatar-1">
+                                👩
+                            </div>
+
+
+                            <div class="mini-info">
+
+                                <div class="mini-name-row">
+
+                                    <p class="mini-name">
+                                        Riya Sharma
+                                    </p>
+
+                                    <span class="mini-rating">
+                                        4.9⭐
+                                    </span>
+
+                                </div>
+
+
+                                <p class="mini-sub">
+                                    Vedic Astrology, Kundli Expert
+                                </p>
+
+                                <p class="mini-sub">
+                                    Fluent languages: Hindi, English
+                                </p>
+
+
+                                <div class="mini-actions">
+
+                                    <button
+                                        class="btn-small"
+                                        onclick="bookAstrologer('Riya Sharma')">
+
+                                        Book Again
+
+                                    </button>
+
+
+                                    <button
+                                        class="btn-small btn-outline-small"
+                                        onclick="viewAstrologer('Riya Sharma')">
+
+                                        View Profile
+
+                                    </button>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="astrologer-list-item">
+
+                            <div class="mini-avatar avatar-2">
+                                👨
+                            </div>
+
+
+                            <div class="mini-info">
+
+                                <div class="mini-name-row">
+
+                                    <p class="mini-name">
+                                        Dr. Rahull Verma
+                                    </p>
+
+                                    <span class="mini-rating">
+                                        4.9⭐
+                                    </span>
+
+                                </div>
+
+
+                                <p class="mini-sub">
+                                    Vedic Astrology
+                                </p>
+
+                                <p class="mini-sub">
+                                    Astrology Courses
+                                </p>
+
+
+                                <div class="mini-actions">
+
+                                    <button
+                                        class="btn-small"
+                                        onclick="bookAstrologer('Dr. Rahull Verma')">
+
+                                        Book Again
+
+                                    </button>
+
+
+                                    <button
+                                        class="btn-small btn-outline-small"
+                                        onclick="viewAstrologer('Dr. Rahull Verma')">
+
+                                        View Profile
+
+                                    </button>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="astrologer-list-item">
+
+                            <div class="mini-avatar avatar-3">
+                                🧔
+                            </div>
+
+
+                            <div class="mini-info">
+
+                                <div class="mini-name-row">
+
+                                    <p class="mini-name">
+                                        Acharya Sudhir Tiwari
+                                    </p>
+
+                                    <span class="mini-rating">
+                                        4.9⭐
+                                    </span>
+
+                                </div>
+
+
+                                <p class="mini-sub">
+                                    Vedic Astrology, Tarot Reading
+                                </p>
+
+
+                                <div class="mini-actions">
+
+                                    <button
+                                        class="btn-small"
+                                        onclick="bookAstrologer('Acharya Sudhir Tiwari')">
+
+                                        Book Again
+
+                                    </button>
+
+
+                                    <button
+                                        class="btn-small btn-outline-small"
+                                        onclick="viewAstrologer('Acharya Sudhir Tiwari')">
+
+                                        View Profile
+
+                                    </button>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =========================
+                 MY CONSULTATIONS
+            ========================== -->
+
+            <div class="panel">
+
+                <div class="panel-banner">
+
+                    <h3>
+                        My Consultations
+                    </h3>
+
+                </div>
+
+
+                <div class="panel-body">
+
+
+                    <div class="tabs">
+
+                        <button
+                            class="tab-btn active"
+                            onclick="showTab('upcoming', this)">
+
+                            Upcoming
+
+                        </button>
+
+
+                        <button
+                            class="tab-btn"
+                            onclick="showTab('past', this)">
+
+                            Past
+
+                        </button>
+
+                    </div>
+
+
+                    <div id="consultations">
+
+                        <p class="empty-note">
+                            No consultations booked yet.
+                        </p>
+
+                    </div>
+
+
+                    <a
+                        href="consult.html"
+                        class="dashboard-button"
+                        style="display:block;text-align:center;margin-top:15px;">
+
+                        Book Consultation
+
+                    </a>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =========================
+                 PROFILE & SETTINGS
+            ========================== -->
+
+            <div class="panel">
+
+                <div class="panel-banner panel-banner-avatar">
+
+                    <div class="profile-avatar">
+                        🧑‍🦱
+                    </div>
+
+                </div>
+
+
+                <div class="panel-body panel-body-center">
+
+                    <h4>
+                        Profile & Settings
+                    </h4>
+
+
+                    <div class="profile-details">
+
+                        <p>
+
+                            <strong>
+                                Name:
+                            </strong>
+
+                            <span id="profileName">
+                                Astro User
+                            </span>
+
+                        </p>
+
+
+                        <p>
+
+                            <strong>
+                                Zodiac:
+                            </strong>
+
+                            <span id="profileZodiac">
+                                Not selected
+                            </span>
+
+                        </p>
+
+                    </div>
+
+
+                    <button
+                        onclick="editProfile()">
+
+                        ✏️ Edit Profile
+
+                    </button>
+
+
+                    <p class="quick-links-label">
+                        Quick links
+                    </p>
+
+
+                    <ul class="quick-links">
+
+                        <li
+                            onclick="openProfileSettings()">
+
+                            🔗 Update personal details
+
+                        </li>
+
+
+                        <li
+                            onclick="openProfileSettings('notification')">
+
+                            🔔 Notification preferences
+
+                        </li>
+
+
+                        <li
+                            onclick="openSettings()"
+                            style="cursor:pointer;">
+
+                            🔒 Password
+
+                        </li>
+
+                    </ul>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================
+     PROFILE SETTINGS MODAL
+========================= -->
+
+<div
+    id="settingsModal"
+    class="settings-modal"
+    onclick="closeSettingsOnBackdrop(event)">
+
+
+    <div class="settings-box">
+
+
+        <button
+            class="settings-close"
+            onclick="closeProfileSettings()">
+
+            ×
+
+        </button>
+
+
+        <h2>
+            ⚙️ Profile & Settings
+        </h2>
+
+
+        <p class="settings-description">
+            Update your AstroAI profile and preferences.
+        </p>
+
+
+        <!-- NAME -->
+
+        <div class="settings-field">
+
+            <label for="settingsName">
+                Your Name
+            </label>
+
+            <input
+                type="text"
+                id="settingsName"
+                placeholder="Enter your name">
+
+        </div>
+
+
+        <!-- ZODIAC -->
+
+        <div class="settings-field">
+
+            <label for="settingsZodiac">
+                Zodiac Sign
+            </label>
+
+            <select id="settingsZodiac">
+
+                <option value="">
+                    Select Zodiac Sign
+                </option>
+
+                <option value="Aries">
+                    ♈ Aries
+                </option>
+
+                <option value="Taurus">
+                    ♉ Taurus
+                </option>
+
+                <option value="Gemini">
+                    ♊ Gemini
+                </option>
+
+                <option value="Cancer">
+                    ♋ Cancer
+                </option>
+
+                <option value="Leo">
+                    ♌ Leo
+                </option>
+
+                <option value="Virgo">
+                    ♍ Virgo
+                </option>
+
+                <option value="Libra">
+                    ♎ Libra
+                </option>
+
+                <option value="Scorpio">
+                    ♏ Scorpio
+                </option>
+
+                <option value="Sagittarius">
+                    ♐ Sagittarius
+                </option>
+
+                <option value="Capricorn">
+                    ♑ Capricorn
+                </option>
+
+                <option value="Aquarius">
+                    ♒ Aquarius
+                </option>
+
+                <option value="Pisces">
+                    ♓ Pisces
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <!-- NOTIFICATIONS -->
+
+        <div class="settings-field">
+
+            <label for="settingsNotifications">
+                Notifications
+            </label>
+
+            <select id="settingsNotifications">
+
+                <option value="on">
+                    🔔 Enabled
+                </option>
+
+                <option value="off">
+                    🔕 Disabled
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <!-- SAVE -->
+
+        <button
+            class="save-settings-btn"
+            onclick="saveProfileSettings()">
+
+            💾 Save Changes
+
+        </button>
+
+
+        <p
+            id="settingsSuccess"
+            class="settings-success">
+
+            ✓ Changes saved successfully!
+
+        </p>
+
+    </div>
+
+</div>
+
+
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<footer>
+
+    <h3>
+        🌿 AstroAI
+    </h3>
+
+    <p>
+        Explore astrology with AstroAI.
+    </p>
+
+    <p class="copyright">
+        © 2026 AstroAI | College Project
+    </p>
+
+</footer>
+
+
+
+<!-- =========================
+     JAVASCRIPT
+========================= -->
+
+<script>
+
+
+/* =====================================================
+   MY HISTORY SYSTEM
+===================================================== */
+
+
+/* GET HISTORY */
+
+function getAstroHistory() {
+
+    try {
+
+        return JSON.parse(
+            localStorage.getItem("astroHistory") || "[]"
+        );
+
+    } catch (error) {
+
+        return [];
+
+    }
+
+}
+
+
+/* SAVE ACTIVITY */
+
+function trackActivity(type, title, details) {
+
+    const history = getAstroHistory();
+
+
+    const activity = {
+
+        id: Date.now(),
+
+        type: type,
+
+        title: title,
+
+        details: details,
+
+        date: new Date().toLocaleDateString(
+            "en-IN",
+            {
+                day: "numeric",
+                month: "short",
+                year: "numeric"
+            }
+        ),
+
+        time: new Date().toLocaleTimeString(
+            "en-IN",
+            {
+                hour: "2-digit",
+                minute: "2-digit"
+            }
+        )
+
+    };
+
+
+    history.unshift(activity);
+
+
+    /* ONLY KEEP LATEST 20 */
+
+    localStorage.setItem(
+        "astroHistory",
+        JSON.stringify(history.slice(0, 20))
+    );
+
+
+    loadMyHistory();
+
+}
+
+
+/* GET ICON */
+
+function getHistoryIcon(type) {
+
+    if (type === "zodiac") {
+        return "♈";
+    }
+
+    if (type === "horoscope") {
+        return "🔮";
+    }
+
+    if (type === "chatbot") {
+        return "🤖";
+    }
+
+    if (type === "astrologer") {
+        return "⭐";
+    }
+
+    if (type === "consultation") {
+        return "📅";
+    }
+
+    if (type === "video") {
+        return "🎥";
+    }
+
+    if (type === "profile") {
+        return "👤";
+    }
+
+    return "✨";
+
+}
+
+
+/* LOAD HISTORY */
+
+function loadMyHistory() {
+
+    const container =
+        document.getElementById("myHistory");
+
+
+    if (!container) {
+        return;
+    }
+
+
+    const history =
+        getAstroHistory();
+
+
+    /* EMPTY */
+
+    if (history.length === 0) {
+
+        container.innerHTML = `
+
+            <div class="history-empty">
+
+                <div class="history-empty-icon">
+                    🕘
+                </div>
+
+                <p>
+                    No activity yet.
+                </p>
+
+                <p>
+                    Your AstroAI activity will appear here.
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    /* DISPLAY */
+
+    container.innerHTML = history
+        .slice(0, 8)
+        .map(function(item) {
+
+            return `
+
+                <div class="history-entry">
+
+                    <div class="history-icon">
+
+                        ${getHistoryIcon(item.type)}
+
+                    </div>
+
+
+                    <div class="history-content">
+
+                        <strong>
+
+                            ${escapeHTML(item.title)}
+
+                        </strong>
+
+
+                        <p>
+
+                            ${escapeHTML(item.details || "")}
+
+                        </p>
+
+
+                        <span class="history-date">
+
+                            ${escapeHTML(item.date)}
+                            •
+                            ${escapeHTML(item.time)}
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+            `;
+
+        })
+        .join("");
+
+}
+
+
+/* CLEAR HISTORY */
+
+function clearMyHistory() {
+
+    const history =
+        getAstroHistory();
+
+
+    if (history.length === 0) {
+
+        alert(
+            "Your history is already empty."
+        );
+
+        return;
+
+    }
+
+
+    const confirmed =
+        confirm(
+            "Are you sure you want to clear your AstroAI history?"
+        );
+
+
+    if (!confirmed) {
+        return;
+    }
+
+
+    localStorage.removeItem(
+        "astroHistory"
+    );
+
+
+    loadMyHistory();
+
+
+    alert(
+        "History cleared successfully. ✅"
+    );
+
+}
+
+
+
+/* =====================================================
+   SAVE HOROSCOPE
+===================================================== */
+
+function saveHoroscope() {
+
+    const horoscope =
+        "Horoscope shared successfully! 🔮";
+
+
+    document.getElementById(
+        "savedHoroscope"
+    ).textContent =
+        horoscope;
+
+
+    localStorage.setItem(
+        "savedHoroscope",
+        horoscope
+    );
+
+
+    trackActivity(
+        "horoscope",
+        "Horoscope Shared",
+        "You shared your saved horoscope."
+    );
+
+}
+
+
+
+/* =====================================================
+   AI CHAT HISTORY
+===================================================== */
+
+function viewChatHistory() {
+
+    trackActivity(
+        "chatbot",
+        "AI Response Regenerated",
+        "You regenerated an AstroAI response."
+    );
+
+
+    alert(
+        "Refreshing your AI chat history... 🤖"
+    );
+
+}
+
+
+function simplifyHistory() {
+
+    trackActivity(
+        "chatbot",
+        "AI History Simplified",
+        "You simplified your AstroAI chat history."
+    );
+
+
+    alert(
+        "AI history simplified. ✨"
+    );
+
+}
+
+
+
+/* =====================================================
+   SAVE VIDEO
+===================================================== */
+
+function saveVideo() {
+
+    trackActivity(
+        "video",
+        "Video Saved",
+        "You saved an astrology video to your list."
+    );
+
+
+    alert(
+        "Video saved to your list! 📺"
+    );
+
+}
+
+
+
+/* =====================================================
+   ASTROLOGER
+===================================================== */
+
+function bookAstrologer(name) {
+
+    localStorage.setItem(
+        "selectedAstrologer",
+        name
+    );
+
+
+    trackActivity(
+        "astrologer",
+        "Astrologer Selected",
+        "You selected " +
+        name +
+        " for consultation."
+    );
+
+
+    window.location.href =
+        "consult.html";
+
+}
+
+
+function viewAstrologer(name) {
+
+    localStorage.setItem(
+        "selectedAstrologer",
+        name
+    );
+
+
+    trackActivity(
+        "astrologer",
+        "Astrologer Profile Viewed",
+        "You viewed the profile of " +
+        name +
+        "."
+    );
+
+
+    window.location.href =
+        "consult.html";
+
+}
+
+
+
+/* =====================================================
+   PROFILE SETTINGS
+===================================================== */
+
+function openProfileSettings(section = "") {
+
+    const modal =
+        document.getElementById(
+            "settingsModal"
+        );
+
+
+    const nameInput =
+        document.getElementById(
+            "settingsName"
+        );
+
+
+    const zodiacInput =
+        document.getElementById(
+            "settingsZodiac"
+        );
+
+
+    const notificationInput =
+        document.getElementById(
+            "settingsNotifications"
+        );
+
+
+    /* LOAD SAVED DATA */
+
+    nameInput.value =
+        localStorage.getItem(
+            "profileName"
+        ) || "";
+
+
+    zodiacInput.value =
+        localStorage.getItem(
+            "profileZodiac"
+        ) || "";
+
+
+    notificationInput.value =
+        localStorage.getItem(
+            "notificationPreference"
+        ) || "on";
+
+
+    /* SHOW */
+
+    modal.classList.add(
+        "active"
+    );
+
+
+    /* FOCUS */
+
+    setTimeout(
+        function() {
+
+            if (
+                section ===
+                "notification"
+            ) {
+
+                notificationInput.focus();
+
+            } else {
+
+                nameInput.focus();
+
+            }
+
+        },
+        100
+    );
+
+}
+
+
+
+/* EDIT PROFILE */
+
+function editProfile() {
+
+    openProfileSettings();
+
+}
+
+
+
+/* CLOSE */
+
+function closeProfileSettings() {
+
+    document
+        .getElementById(
+            "settingsModal"
+        )
+        .classList.remove(
+            "active"
+        );
+
+}
+
+
+function closeSettingsOnBackdrop(event) {
+
+    if (
+        event.target.id ===
+        "settingsModal"
+    ) {
+
+        closeProfileSettings();
+
+    }
+
+}
+
+
+
+/* =====================================================
+   SAVE PROFILE
+===================================================== */
+
+function saveProfileSettings() {
+
+    const name =
+        document
+            .getElementById(
+                "settingsName"
+            )
+            .value
+            .trim();
+
+
+    const zodiac =
+        document
+            .getElementById(
+                "settingsZodiac"
+            )
+            .value;
+
+
+    const notifications =
+        document
+            .getElementById(
+                "settingsNotifications"
+            )
+            .value;
+
+
+    /* NAME */
+
+    if (name !== "") {
+
+        localStorage.setItem(
+            "profileName",
+            name
+        );
+
+    } else {
+
+        localStorage.removeItem(
+            "profileName"
+        );
+
+    }
+
+
+    /* ZODIAC */
+
+    localStorage.setItem(
+        "profileZodiac",
+        zodiac
+    );
+
+
+    /* NOTIFICATIONS */
+
+    localStorage.setItem(
+        "notificationPreference",
+        notifications
+    );
+
+
+    /* UPDATE */
+
+    updateProfileDisplay();
+
+
+    /* HISTORY */
+
+    trackActivity(
+        "profile",
+        "Profile Updated",
+        "Your AstroAI profile settings were updated."
+    );
+
+
+    /* SUCCESS */
+
+    const success =
+        document.getElementById(
+            "settingsSuccess"
+        );
+
+
+    success.style.display =
+        "block";
+
+
+    setTimeout(
+        function() {
+
+            success.style.display =
+                "none";
+
+
+            closeProfileSettings();
+
+        },
+        1000
+    );
+
+}
+
+
+
+/* =====================================================
+   UPDATE PROFILE DISPLAY
+===================================================== */
+
+function updateProfileDisplay() {
+
+    const savedName =
+        localStorage.getItem(
+            "profileName"
+        );
+
+
+    const savedZodiac =
+        localStorage.getItem(
+            "profileZodiac"
+        );
+
+
+    document.getElementById(
+        "profileName"
+    ).textContent =
+        savedName ||
+        "Astro User";
+
+
+    document.getElementById(
+        "profileNameHero"
+    ).textContent =
+        savedName ||
+        "Astro User";
+
+
+    document.getElementById(
+        "profileZodiac"
+    ).textContent =
+        savedZodiac
+            ? savedZodiac
+            : "Not selected";
+
+}
+
+
+
+/* =====================================================
+   PASSWORD
+===================================================== */
+
+function openSettings() {
+
+    alert(
+        "Password management is a demo feature in this college project. 🔒"
+    );
+
+}
+
+
+
+/* =====================================================
+   ESC KEY
+===================================================== */
+
+document.addEventListener(
+    "keydown",
+    function(event) {
+
+        if (
+            event.key ===
+            "Escape"
+        ) {
+
+            closeProfileSettings();
+
+        }
+
+    }
+);
+
+
+
+/* =====================================================
+   CONSULTATION TABS
+===================================================== */
+
+let currentTab =
+    "upcoming";
+
+
+function showTab(
+    tab,
+    btn
+) {
+
+    currentTab =
+        tab;
+
+
+    document
+        .querySelectorAll(
+            ".tab-btn"
+        )
+        .forEach(
+            function(button) {
+
+                button.classList.remove(
+                    "active"
+                );
+
+            }
+        );
+
+
+    if (btn) {
+
+        btn.classList.add(
+            "active"
+        );
+
+    }
+
+
+    loadConsultations();
+
+}
+
+
+
+/* =====================================================
+   CANCEL CONSULTATION
+===================================================== */
+
+function cancelConsultation(id) {
+
+    const confirmCancel =
+        confirm(
+            "Are you sure you want to cancel this consultation?"
+        );
+
+
+    if (!confirmCancel) {
+
+        return;
+
+    }
+
+
+    let consultations =
+        JSON.parse(
+            localStorage.getItem(
+                "consultations"
+            )
+        ) || [];
+
+
+    const cancelled =
+        consultations.find(
+            function(item) {
+
+                return item.id === id;
+
+            }
+        );
+
+
+    consultations =
+        consultations.filter(
+            function(consultation) {
+
+                return consultation.id !== id;
+
+            }
+        );
+
+
+    localStorage.setItem(
+        "consultations",
+        JSON.stringify(
+            consultations
+        )
+    );
+
+
+    if (cancelled) {
+
+        trackActivity(
+            "consultation",
+            "Consultation Cancelled",
+            "Your consultation with " +
+            cancelled.astrologer +
+            " was cancelled."
+        );
+
+    }
+
+
+    loadConsultations();
+
+
+    alert(
+        "Consultation cancelled successfully. ✅"
+    );
+
+}
+
+
+
+/* =====================================================
+   LOAD CONSULTATIONS
+===================================================== */
+
+function loadConsultations() {
+
+    const consultations =
+        JSON.parse(
+            localStorage.getItem(
+                "consultations"
+            )
+        ) || [];
+
+
+    const container =
+        document.getElementById(
+            "consultations"
+        );
+
+
+    if (!container) {
+        return;
+    }
+
+
+    const today =
+        new Date();
+
+
+    today.setHours(
+        0,
+        0,
+        0,
+        0
+    );
+
+
+    /* FILTER */
+
+    const filteredConsultations =
+        consultations.filter(
+            function(consultation) {
+
+                if (
+                    !consultation.date
+                ) {
+
+                    return false;
+
+                }
+
+
+                const consultationDate =
+                    new Date(
+                        consultation.date +
+                        "T00:00:00"
+                    );
+
+
+                if (
+                    currentTab ===
+                    "upcoming"
+                ) {
+
+                    return (
+                        consultationDate >=
+                        today
+                    );
+
+                }
+
+
+                return (
+                    consultationDate <
+                    today
+                );
+
+            }
+        );
+
+
+    /* NO RESULTS */
+
+    if (
+        filteredConsultations.length ===
+        0
+    ) {
+
+        if (
+            currentTab ===
+            "upcoming"
+        ) {
+
+            container.innerHTML =
+                "<p class='empty-note'>" +
+                "No upcoming consultations booked yet." +
+                "</p>";
+
+        } else {
+
+            container.innerHTML =
+                "<p class='empty-note'>" +
+                "No past consultations found." +
+                "</p>";
+
+        }
+
+        return;
+
+    }
+
+
+    /* CLEAR */
+
+    container.innerHTML =
+        "";
+
+
+    /* DISPLAY */
+
+    filteredConsultations.forEach(
+        function(consultation) {
+
+
+            const card =
+                document.createElement(
+                    "div"
+                );
+
+
+            card.className =
+                "consultation-item";
+
+
+            /* HEADER */
+
+            const header =
+                document.createElement(
+                    "div"
+                );
+
+
+            header.className =
+                "consultation-header";
+
+
+            const astrologer =
+                document.createElement(
+                    "div"
+                );
+
+
+            astrologer.className =
+                "consultation-astrologer";
+
+
+            astrologer.textContent =
+                "👨‍🔮 " +
+                (
+                    consultation.astrologer ||
+                    "Astrologer"
+                );
+
+
+            const status =
+                document.createElement(
+                    "span"
+                );
+
+
+            status.className =
+                "consultation-status";
+
+
+            if (
+                currentTab ===
+                "upcoming"
+            ) {
+
+                status.textContent =
+                    "CONFIRMED";
+
+            } else {
+
+                status.textContent =
+                    "COMPLETED";
+
+            }
+
+
+            header.appendChild(
+                astrologer
+            );
+
+
+            header.appendChild(
+                status
+            );
+
+
+            /* DETAILS */
+
+            const details =
+                document.createElement(
+                    "div"
+                );
+
+
+            details.className =
+                "consultation-details";
+
+
+            details.innerHTML =
+
+                "<div class='consultation-detail'>" +
+
+                "<span>📅</span>" +
+
+                "<div>" +
+
+                "<small>Date</small>" +
+
+                "<strong>" +
+
+                escapeHTML(
+                    consultation.date ||
+                    "Not available"
+                ) +
+
+                "</strong>" +
+
+                "</div>" +
+
+                "</div>" +
+
+
+                "<div class='consultation-detail'>" +
+
+                "<span>⏰</span>" +
+
+                "<div>" +
+
+                "<small>Time</small>" +
+
+                "<strong>" +
+
+                escapeHTML(
+                    consultation.time ||
+                    "Not available"
+                ) +
+
+                "</strong>" +
+
+                "</div>" +
+
+                "</div>" +
+
+
+                "<div class='consultation-detail'>" +
+
+                "<span>💬</span>" +
+
+                "<div>" +
+
+                "<small>Topic</small>" +
+
+                "<strong>" +
+
+                escapeHTML(
+                    consultation.topic ||
+                    "Not available"
+                ) +
+
+                "</strong>" +
+
+                "</div>" +
+
+                "</div>" +
+
+
+                "<div class='consultation-detail'>" +
+
+                "<span>👤</span>" +
+
+                "<div>" +
+
+                "<small>Name</small>" +
+
+                "<strong>" +
+
+                escapeHTML(
+                    consultation.name ||
+                    "Not available"
+                ) +
+
+                "</strong>" +
+
+                "</div>" +
+
+                "</div>";
+
+
+            /* BOOKING ID */
+
+            const bookingId =
+                document.createElement(
+                    "p"
+                );
+
+
+            bookingId.className =
+                "consultation-id";
+
+
+            bookingId.innerHTML =
+                "🆔 Booking ID: <strong>" +
+
+                escapeHTML(
+                    consultation.id ||
+                    "Not available"
+                ) +
+
+                "</strong>";
+
+
+            /* ACTIONS */
+
+            const actions =
+                document.createElement(
+                    "div"
+                );
+
+
+            actions.className =
+                "consultation-actions";
+
+
+            if (
+                currentTab ===
+                "upcoming"
+            ) {
+
+                const cancelButton =
+                    document.createElement(
+                        "button"
+                    );
+
+
+                cancelButton.className =
+                    "cancel-consultation-btn";
+
+
+                cancelButton.textContent =
+                    "Cancel Consultation";
+
+
+                cancelButton.onclick =
+                    function() {
+
+                        cancelConsultation(
+                            consultation.id
+                        );
+
+                    };
+
+
+                actions.appendChild(
+                    cancelButton
+                );
+
+            }
+
+
+            /* ADD */
+
+            card.appendChild(
+                header
+            );
+
+
+            card.appendChild(
+                details
+            );
+
+
+            card.appendChild(
+                bookingId
+            );
+
+
+            if (
+                actions.children.length >
+                0
+            ) {
+
+                card.appendChild(
+                    actions
+                );
+
+            }
+
+
+            container.appendChild(
+                card
+            );
+
+        }
+    );
+
+}
+
+
+
+/* =====================================================
+   SAFE HTML
+===================================================== */
+
+function escapeHTML(value) {
+
+    const div =
+        document.createElement(
+            "div"
+        );
+
+
+    div.textContent =
+        value;
+
+
+    return div.innerHTML;
+
+}
+
+
+
+/* =====================================================
+   DETECT PREVIOUS PAGE
+===================================================== */
+
+function trackPreviousPage() {
+
+    const referrer =
+        document.referrer;
+
+
+    if (!referrer) {
+        return;
+    }
+
+
+    if (
+        referrer.includes(
+            "zodiac.html"
+        )
+    ) {
+
+        trackActivity(
+            "zodiac",
+            "Zodiac Page Visited",
+            "You viewed the AstroAI Zodiac section."
+        );
+
+    }
+
+
+    else if (
+        referrer.includes(
+            "horoscope.html"
+        )
+    ) {
+
+        trackActivity(
+            "horoscope",
+            "Horoscope Page Visited",
+            "You viewed the AstroAI Horoscope section."
+        );
+
+    }
+
+
+    else if (
+        referrer.includes(
+            "chatbot.html"
+        )
+    ) {
+
+        trackActivity(
+            "chatbot",
+            "Chatbot Visited",
+            "You opened the AstroAI AI chatbot."
+        );
+
+    }
+
+
+    else if (
+        referrer.includes(
+            "consult.html"
+        )
+    ) {
+
+        trackActivity(
+            "consultation",
+            "Consultation Page Visited",
+            "You visited the AstroAI consultation section."
+        );
+
+    }
+
+}
+
+
+
+/* =====================================================
+   LOAD DASHBOARD
+===================================================== */
+
+function loadDashboard() {
+
+
+    /* PROFILE */
+
+    updateProfileDisplay();
+
+
+    /* HOROSCOPE */
+
+    const savedHoroscope =
+        localStorage.getItem(
+            "savedHoroscope"
+        );
+
+
+    if (savedHoroscope) {
+
+        document.getElementById(
+            "savedHoroscope"
+        ).textContent =
+            savedHoroscope;
+
+    }
+
+
+    /* CONSULTATIONS */
+
+    loadConsultations();
+
+
+    /* MY HISTORY */
+
+    loadMyHistory();
+
+
+    /* PREVIOUS PAGE */
+
+    trackPreviousPage();
+
+}
+
+
+
+/* =====================================================
+   START
+===================================================== */
+
+loadDashboard();
+
+
+</script>
+
+
+</body>
+
+</html>

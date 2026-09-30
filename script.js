@@ -104,12 +104,107 @@ const zodiacData = {
 
 
 /* =========================
+   ASTROAI ACTIVITY HISTORY
+========================= */
+
+function getAstroHistory() {
+
+    try {
+
+        return JSON.parse(
+            localStorage.getItem("astroHistory")
+        ) || [];
+
+    } catch (error) {
+
+        return [];
+
+    }
+
+}
+
+
+function trackActivity(type, title, details) {
+
+    const history = getAstroHistory();
+
+    const icons = {
+
+        zodiac: "♈",
+        horoscope: "🔮",
+        chatbot: "🤖",
+        astrologer: "👨‍🔮",
+        consultation: "📅",
+        video: "📺",
+        profile: "👤",
+        dashboard: "🏠"
+
+    };
+
+
+    /* Prevent accidental duplicate entries */
+
+    const last = history[0];
+
+    if (
+
+        last &&
+        last.title === title &&
+        last.details === details &&
+        Date.now() -
+        new Date(last.timestamp).getTime() < 5000
+
+    ) {
+
+        return;
+
+    }
+
+
+    history.unshift({
+
+        id: Date.now(),
+
+        type: type,
+
+        title: title,
+
+        details: details || "",
+
+        icon: icons[type] || "✨",
+
+        timestamp: new Date().toISOString()
+
+    });
+
+
+    /* Keep only latest 30 activities */
+
+    localStorage.setItem(
+
+        "astroHistory",
+
+        JSON.stringify(
+            history.slice(0, 30)
+        )
+
+    );
+
+}
+
+
+/* =========================
    ZODIAC POPUP
 ========================= */
 
 function showZodiac(sign) {
 
     const data = zodiacData[sign];
+
+    if (!data) {
+        return;
+    }
+
 
     document.getElementById("modalSymbol").textContent =
         data.symbol;
@@ -124,11 +219,29 @@ function showZodiac(sign) {
         "🌍 Element: " + data.element;
 
     document.getElementById("modalDescription").textContent =
-        "🪐 Ruling Planet: " + data.planet +
-        " | ✨ " + data.description;
+        "🪐 Ruling Planet: " +
+        data.planet +
+        " | ✨ " +
+        data.description;
 
     document.getElementById("zodiacModal").style.display =
         "flex";
+
+
+    /* Track the zodiac sign being viewed */
+
+    trackActivity(
+
+        "zodiac",
+
+        sign + " Zodiac Viewed",
+
+        "You viewed the " +
+        sign +
+        " zodiac information."
+
+    );
+
 }
 
 
@@ -140,20 +253,25 @@ function closeZodiac() {
 }
 
 
-/* Close popup when clicking outside */
+/* =========================
+   CLOSE ZODIAC POPUP
+========================= */
 
-window.onclick = function(event) {
+window.addEventListener("click", function(event) {
 
     const modal =
         document.getElementById("zodiacModal");
 
-    if (event.target === modal) {
+    if (
+        modal &&
+        event.target === modal
+    ) {
 
         closeZodiac();
 
     }
 
-};
+});
 
 
 /* =========================
@@ -203,11 +321,21 @@ const horoscopeData = {
 
 function showHoroscope() {
 
-    const sign =
-        document.getElementById("horoscopeSign").value;
+    const signElement =
+        document.getElementById("horoscopeSign");
 
     const result =
         document.getElementById("horoscopeResult");
+
+
+    if (!signElement || !result) {
+        return;
+    }
+
+
+    const sign =
+        signElement.value;
+
 
     if (sign === "") {
 
@@ -215,15 +343,34 @@ function showHoroscope() {
             "Please select a zodiac sign first. ✨";
 
         return;
+
     }
 
+
     result.innerHTML =
+
         "<strong>" +
         zodiacData[sign].symbol +
         " " +
         sign +
         "</strong><br><br>" +
+
         horoscopeData[sign];
+
+
+    /* Track horoscope viewing */
+
+    trackActivity(
+
+        "horoscope",
+
+        sign + " Horoscope Viewed",
+
+        "You viewed today's " +
+        sign +
+        " horoscope."
+
+    );
 
 }
 
@@ -237,50 +384,109 @@ async function sendMessage() {
     const input =
         document.getElementById("userInput");
 
+
+    if (!input) {
+        return;
+    }
+
+
     const message =
         input.value.trim();
+
 
     if (message === "") {
         return;
     }
 
-    addMessage(message, "user");
+
+    addMessage(
+        message,
+        "user"
+    );
+
 
     input.value = "";
 
+
     showTyping();
+
+
+    /* Track chatbot activity */
+
+    trackActivity(
+
+        "chatbot",
+
+        "AI Chatbot Used",
+
+        "You asked AstroAI: " +
+        message
+
+    );
+
 
     try {
 
-        const response = await fetch("/api/chat", {
+        const response =
+            await fetch(
+                "/api/chat",
+                {
 
-            method: "POST",
+                    method: "POST",
 
-            headers: {
-                "Content-Type": "application/json"
-            },
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
 
-            body: JSON.stringify({
-                message: message
-            })
+                    body: JSON.stringify({
+                        message: message
+                    })
 
-        });
+                }
+            );
 
-        const data = await response.json();
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Server response was not successful."
+            );
+
+        }
+
+
+        const data =
+            await response.json();
+
 
         removeTyping();
 
-        addMessage(data.reply, "bot");
+
+        addMessage(
+
+            data.reply ||
+            "Sorry, I couldn't generate a response. 🤖",
+
+            "bot"
+
+        );
+
 
     } catch (error) {
 
         console.error(error);
 
+
         removeTyping();
 
+
         addMessage(
+
             "Sorry, I couldn't connect to the AstroAI server. 🤖",
+
             "bot"
+
         );
 
     }
@@ -297,11 +503,19 @@ function addMessage(message, type) {
     const chatMessages =
         document.getElementById("chatMessages");
 
+
+    if (!chatMessages) {
+        return;
+    }
+
+
     const messageDiv =
         document.createElement("div");
 
+
     messageDiv.textContent =
         message;
+
 
     if (type === "user") {
 
@@ -315,7 +529,11 @@ function addMessage(message, type) {
 
     }
 
-    chatMessages.appendChild(messageDiv);
+
+    chatMessages.appendChild(
+        messageDiv
+    );
+
 
     chatMessages.scrollTop =
         chatMessages.scrollHeight;
@@ -332,19 +550,45 @@ function showTyping() {
     const chatMessages =
         document.getElementById("chatMessages");
 
+
+    if (!chatMessages) {
+        return;
+    }
+
+
+    /* Don't create multiple indicators */
+
+    if (
+        document.getElementById(
+            "typingIndicator"
+        )
+    ) {
+
+        return;
+
+    }
+
+
     const typing =
         document.createElement("div");
+
 
     typing.id =
         "typingIndicator";
 
+
     typing.className =
         "typing-message";
+
 
     typing.innerHTML =
         'AstroAI is typing <span class="typing-dots">...</span>';
 
-    chatMessages.appendChild(typing);
+
+    chatMessages.appendChild(
+        typing
+    );
+
 
     chatMessages.scrollTop =
         chatMessages.scrollHeight;
@@ -355,7 +599,10 @@ function showTyping() {
 function removeTyping() {
 
     const typing =
-        document.getElementById("typingIndicator");
+        document.getElementById(
+            "typingIndicator"
+        );
+
 
     if (typing) {
 
@@ -375,8 +622,15 @@ function askQuestion(question) {
     const input =
         document.getElementById("userInput");
 
+
+    if (!input) {
+        return;
+    }
+
+
     input.value =
         question;
+
 
     sendMessage();
 
@@ -389,7 +643,9 @@ function askQuestion(question) {
 
 function handleEnter(event) {
 
-    if (event.key === "Enter") {
+    if (
+        event.key === "Enter"
+    ) {
 
         sendMessage();
 
@@ -404,11 +660,20 @@ function handleEnter(event) {
 
 function goToChat() {
 
-    document
-        .getElementById("chatbot")
-        .scrollIntoView({
-            behavior: "smooth"
-        });
+    const chatbot =
+        document.getElementById("chatbot");
+
+
+    if (!chatbot) {
+        return;
+    }
+
+
+    chatbot.scrollIntoView({
+
+        behavior: "smooth"
+
+    });
 
 }
 
@@ -419,11 +684,26 @@ function goToChat() {
 
 function findZodiac() {
 
-    const birthDate =
-        document.getElementById("birthDate").value;
+    const birthDateElement =
+        document.getElementById("birthDate");
 
     const result =
         document.getElementById("zodiacResult");
+
+
+    if (
+        !birthDateElement ||
+        !result
+    ) {
+
+        return;
+
+    }
+
+
+    const birthDate =
+        birthDateElement.value;
+
 
     if (birthDate === "") {
 
@@ -431,92 +711,122 @@ function findZodiac() {
             "Please enter your date of birth. ✨";
 
         return;
+
     }
 
+
     const date =
-        new Date(birthDate + "T00:00:00");
+        new Date(
+            birthDate +
+            "T00:00:00"
+        );
+
 
     const day =
         date.getDate();
 
+
     const month =
         date.getMonth() + 1;
+
 
     let sign = "";
 
 
-    if ((month === 3 && day >= 21) ||
-        (month === 4 && day <= 19)) {
+    if (
+        (month === 3 && day >= 21) ||
+        (month === 4 && day <= 19)
+    ) {
 
         sign = "Aries";
 
     }
 
-    else if ((month === 4 && day >= 20) ||
-             (month === 5 && day <= 20)) {
+    else if (
+        (month === 4 && day >= 20) ||
+        (month === 5 && day <= 20)
+    ) {
 
         sign = "Taurus";
 
     }
 
-    else if ((month === 5 && day >= 21) ||
-             (month === 6 && day <= 20)) {
+    else if (
+        (month === 5 && day >= 21) ||
+        (month === 6 && day <= 20)
+    ) {
 
         sign = "Gemini";
 
     }
 
-    else if ((month === 6 && day >= 21) ||
-             (month === 7 && day <= 22)) {
+    else if (
+        (month === 6 && day >= 21) ||
+        (month === 7 && day <= 22)
+    ) {
 
         sign = "Cancer";
 
     }
 
-    else if ((month === 7 && day >= 23) ||
-             (month === 8 && day <= 22)) {
+    else if (
+        (month === 7 && day >= 23) ||
+        (month === 8 && day <= 22)
+    ) {
 
         sign = "Leo";
 
     }
 
-    else if ((month === 8 && day >= 23) ||
-             (month === 9 && day <= 22)) {
+    else if (
+        (month === 8 && day >= 23) ||
+        (month === 9 && day <= 22)
+    ) {
 
         sign = "Virgo";
 
     }
 
-    else if ((month === 9 && day >= 23) ||
-             (month === 10 && day <= 22)) {
+    else if (
+        (month === 9 && day >= 23) ||
+        (month === 10 && day <= 22)
+    ) {
 
         sign = "Libra";
 
     }
 
-    else if ((month === 10 && day >= 23) ||
-             (month === 11 && day <= 21)) {
+    else if (
+        (month === 10 && day >= 23) ||
+        (month === 11 && day <= 21)
+    ) {
 
         sign = "Scorpio";
 
     }
 
-    else if ((month === 11 && day >= 22) ||
-             (month === 12 && day <= 21)) {
+    else if (
+        (month === 11 && day >= 22) ||
+        (month === 12 && day <= 21)
+    ) {
 
         sign = "Sagittarius";
 
     }
 
-    else if ((month === 12 && day >= 22) ||
-             (month === 1 && day <= 19)) {
+    else if (
+        (month === 12 && day >= 22) ||
+        (month === 1 && day <= 19)
+    ) {
 
         sign = "Capricorn";
 
     }
 
-    else if ((month === 1 && day >= 20) ||
-             (month === 2 && day <= 18)) {
+    else if (
+        (month === 1 && day >= 20) ||
+        (month === 2 && day <= 18)
+    ) {
 
         sign = "Aquarius";
 
@@ -532,18 +842,40 @@ function findZodiac() {
     const data =
         zodiacData[sign];
 
+
     result.innerHTML =
+
         "<strong>" +
         data.symbol +
         " " +
         sign +
         "</strong><br><br>" +
+
         "🌍 Element: " +
         data.element +
+
         "<br>" +
+
         "🪐 Ruling Planet: " +
         data.planet +
+
         "<br><br>" +
+
         data.description;
+
+
+    /* Track zodiac finder activity */
+
+    trackActivity(
+
+        "zodiac",
+
+        "Zodiac Sign Found",
+
+        "Your selected birth date corresponds to " +
+        sign +
+        "."
+
+    );
 
 }
